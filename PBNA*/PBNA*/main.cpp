@@ -1,3 +1,13 @@
+/* GNU GENERAL PUBLIC LICENSE
+
+Version 1.0.0, 18 November 2020
+
+Copyright © 2007 Free Software Foundation, Inc. <https://fsf.org/>
+
+Everyone is permitted to copy and distribute verbatim copies of this license document, but changing it is not allowed.
+ 
+ */
+
 /*
  *  Final Project Programming Languages
  *
@@ -530,7 +540,6 @@ int main()
                     if(elem.second.size() == 1){
                         if(elem.second.front().id == a1.id && !a1Blocked){
                             if(elem.first.first == dest1.first && elem.first.second == dest1.second){
-                                cout << "Agent 1 completed " << endl;
                                 a1.hasCompleted = true;
                             }
                             explorationSpace[elem.first.first][elem.first.second] = a1.id;
@@ -538,7 +547,6 @@ int main()
                         }
                         if(elem.second.front().id == a2.id && !a2Blocked){
                             if(elem.first.first == dest2.first && elem.first.second == dest2.second){
-                                cout << "Agent 2 completed " << endl;
                                 a2.hasCompleted = true;
                             }
                             explorationSpace[elem.first.first][elem.first.second] = a2.id;
@@ -555,12 +563,10 @@ int main()
                             if(first.id == a1.id){
                                 removeAgentOccupied(a2.id, src2, dest2);
                                 a2Blocked = true;
-                                cout << "Agent 1 completed " << endl;
                                 a1.hasCompleted = true;
                             }else{
                                 removeAgentOccupied(a1.id, src1, dest1);
                                 a1Blocked = true;
-                                cout << "Agent 2 completed " << endl;
                                 a2.hasCompleted = true;
                             }
                         }else{
@@ -568,12 +574,10 @@ int main()
                             if(second.id == a1.id){
                                 removeAgentOccupied(a2.id, src2, dest2);
                                 a2Blocked = true;
-                                cout << "Agent 1 completed " << endl;
                                 a1.hasCompleted = true;
                             }else{
                                 removeAgentOccupied(a1.id, src1, dest1);
                                 a1Blocked = true;
-                                cout << "Agent 2 completed " << endl;
                                 a2.hasCompleted = true;
                             }
                         }
@@ -586,7 +590,13 @@ int main()
                     a1.hasCompleted = true;
                     a2.hasCompleted = true;
                 }else{
-                    // Perform backtrack
+                    // State who has finished
+                    if(a1.hasCompleted){
+                        cout << "Agent 1 has completed" << endl;
+                    }else if(a2.hasCompleted){
+                        cout << "Agent 2 has completed" << endl;
+                    }
+                    // Perform backtrack, that also, saves computing time by advancing the start node
                     if(!a1.hasCompleted){
                         Pair aux = backtrack(src1, a1.id);
                         if(aux.first != -1 && aux.second != -1){
