@@ -23,89 +23,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		8834F50125574FBC00FC9E8B /* combinable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = combinable.h; sourceTree = "<group>"; };
-		8834F50225574FBC00FC9E8B /* tbb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tbb.h; sourceTree = "<group>"; };
-		8834F50325574FBC00FC9E8B /* concurrent_unordered_map.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = concurrent_unordered_map.h; sourceTree = "<group>"; };
-		8834F50425574FBC00FC9E8B /* memory_pool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = memory_pool.h; sourceTree = "<group>"; };
-		8834F50525574FBC00FC9E8B /* task.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = task.h; sourceTree = "<group>"; };
-		8834F50625574FBC00FC9E8B /* concurrent_hash_map.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = concurrent_hash_map.h; sourceTree = "<group>"; };
-		8834F50725574FBC00FC9E8B /* runtime_loader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = runtime_loader.h; sourceTree = "<group>"; };
-		8834F50825574FBC00FC9E8B /* enumerable_thread_specific.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = enumerable_thread_specific.h; sourceTree = "<group>"; };
-		8834F50A25574FBC00FC9E8B /* tuple */ = {isa = PBXFileReference; lastKnownFileType = text; path = tuple; sourceTree = "<group>"; };
-		8834F50B25574FBC00FC9E8B /* ppl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ppl.h; sourceTree = "<group>"; };
-		8834F50C25574FBC00FC9E8B /* condition_variable */ = {isa = PBXFileReference; lastKnownFileType = text; path = condition_variable; sourceTree = "<group>"; };
-		8834F50D25574FBC00FC9E8B /* thread */ = {isa = PBXFileReference; lastKnownFileType = text; path = thread; sourceTree = "<group>"; };
-		8834F50E25574FBC00FC9E8B /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
-		8834F50F25574FBC00FC9E8B /* scalable_allocator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = scalable_allocator.h; sourceTree = "<group>"; };
-		8834F51025574FBC00FC9E8B /* task_scheduler_init.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = task_scheduler_init.h; sourceTree = "<group>"; };
-		8834F51125574FBC00FC9E8B /* concurrent_lru_cache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = concurrent_lru_cache.h; sourceTree = "<group>"; };
-		8834F51225574FBC00FC9E8B /* parallel_invoke.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = parallel_invoke.h; sourceTree = "<group>"; };
-		8834F51325574FBC00FC9E8B /* task_group.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = task_group.h; sourceTree = "<group>"; };
-		8834F51425574FBC00FC9E8B /* tbb_machine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tbb_machine.h; sourceTree = "<group>"; };
-		8834F51525574FBC00FC9E8B /* task_scheduler_observer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = task_scheduler_observer.h; sourceTree = "<group>"; };
-		8834F51625574FBC00FC9E8B /* aligned_space.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = aligned_space.h; sourceTree = "<group>"; };
-		8834F51725574FBC00FC9E8B /* concurrent_priority_queue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = concurrent_priority_queue.h; sourceTree = "<group>"; };
-		8834F51825574FBC00FC9E8B /* tbb_thread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tbb_thread.h; sourceTree = "<group>"; };
-		8834F51A25574FBC00FC9E8B /* _flow_graph_types_impl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _flow_graph_types_impl.h; sourceTree = "<group>"; };
-		8834F51B25574FBC00FC9E8B /* _aggregator_impl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _aggregator_impl.h; sourceTree = "<group>"; };
-		8834F51C25574FBC00FC9E8B /* _concurrent_unordered_impl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _concurrent_unordered_impl.h; sourceTree = "<group>"; };
-		8834F51D25574FBC00FC9E8B /* _flow_graph_node_impl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _flow_graph_node_impl.h; sourceTree = "<group>"; };
-		8834F51E25574FBC00FC9E8B /* _flow_graph_or_impl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _flow_graph_or_impl.h; sourceTree = "<group>"; };
-		8834F51F25574FBC00FC9E8B /* _concurrent_queue_impl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _concurrent_queue_impl.h; sourceTree = "<group>"; };
-		8834F52025574FBC00FC9E8B /* _flow_graph_item_buffer_impl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _flow_graph_item_buffer_impl.h; sourceTree = "<group>"; };
-		8834F52125574FBC00FC9E8B /* _flow_graph_tagged_buffer_impl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _flow_graph_tagged_buffer_impl.h; sourceTree = "<group>"; };
-		8834F52225574FBC00FC9E8B /* _tbb_windef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _tbb_windef.h; sourceTree = "<group>"; };
-		8834F52325574FBC00FC9E8B /* _flow_graph_impl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _flow_graph_impl.h; sourceTree = "<group>"; };
-		8834F52425574FBC00FC9E8B /* _flow_graph_join_impl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _flow_graph_join_impl.h; sourceTree = "<group>"; };
-		8834F52525574FBC00FC9E8B /* parallel_reduce.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = parallel_reduce.h; sourceTree = "<group>"; };
-		8834F52625574FBC00FC9E8B /* cache_aligned_allocator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cache_aligned_allocator.h; sourceTree = "<group>"; };
-		8834F52725574FBC00FC9E8B /* null_mutex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = null_mutex.h; sourceTree = "<group>"; };
-		8834F52825574FBC00FC9E8B /* blocked_range.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = blocked_range.h; sourceTree = "<group>"; };
-		8834F52925574FBC00FC9E8B /* tbb_stddef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tbb_stddef.h; sourceTree = "<group>"; };
-		8834F52A25574FBC00FC9E8B /* critical_section.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = critical_section.h; sourceTree = "<group>"; };
-		8834F52B25574FBC00FC9E8B /* spin_rw_mutex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = spin_rw_mutex.h; sourceTree = "<group>"; };
-		8834F52C25574FBC00FC9E8B /* tbb_profiling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tbb_profiling.h; sourceTree = "<group>"; };
-		8834F52D25574FBC00FC9E8B /* tbb_exception.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tbb_exception.h; sourceTree = "<group>"; };
-		8834F52E25574FBC00FC9E8B /* reader_writer_lock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = reader_writer_lock.h; sourceTree = "<group>"; };
-		8834F52F25574FBC00FC9E8B /* flow_graph.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = flow_graph.h; sourceTree = "<group>"; };
-		8834F53125574FBC00FC9E8B /* linux_intel64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = linux_intel64.h; sourceTree = "<group>"; };
-		8834F53225574FBC00FC9E8B /* linux_ia64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = linux_ia64.h; sourceTree = "<group>"; };
-		8834F53325574FBC00FC9E8B /* xbox360_ppc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xbox360_ppc.h; sourceTree = "<group>"; };
-		8834F53425574FBC00FC9E8B /* sunos_sparc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sunos_sparc.h; sourceTree = "<group>"; };
-		8834F53525574FBC00FC9E8B /* windows_api.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = windows_api.h; sourceTree = "<group>"; };
-		8834F53625574FBC00FC9E8B /* windows_intel64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = windows_intel64.h; sourceTree = "<group>"; };
-		8834F53725574FBC00FC9E8B /* ibm_aix51.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ibm_aix51.h; sourceTree = "<group>"; };
-		8834F53825574FBC00FC9E8B /* mac_ppc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mac_ppc.h; sourceTree = "<group>"; };
-		8834F53925574FBC00FC9E8B /* gcc_generic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gcc_generic.h; sourceTree = "<group>"; };
-		8834F53A25574FBC00FC9E8B /* windows_ia32.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = windows_ia32.h; sourceTree = "<group>"; };
-		8834F53B25574FBC00FC9E8B /* linux_common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = linux_common.h; sourceTree = "<group>"; };
-		8834F53C25574FBC00FC9E8B /* macos_common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = macos_common.h; sourceTree = "<group>"; };
-		8834F53D25574FBC00FC9E8B /* linux_ia32.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = linux_ia32.h; sourceTree = "<group>"; };
-		8834F53E25574FBC00FC9E8B /* concurrent_vector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = concurrent_vector.h; sourceTree = "<group>"; };
-		8834F53F25574FBC00FC9E8B /* parallel_do.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = parallel_do.h; sourceTree = "<group>"; };
-		8834F54025574FBC00FC9E8B /* null_rw_mutex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = null_rw_mutex.h; sourceTree = "<group>"; };
-		8834F54125574FBC00FC9E8B /* parallel_for.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = parallel_for.h; sourceTree = "<group>"; };
-		8834F54225574FBC00FC9E8B /* tbbmalloc_proxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tbbmalloc_proxy.h; sourceTree = "<group>"; };
-		8834F54325574FBC00FC9E8B /* pipeline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pipeline.h; sourceTree = "<group>"; };
-		8834F54425574FBC00FC9E8B /* concurrent_queue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = concurrent_queue.h; sourceTree = "<group>"; };
-		8834F54525574FBC00FC9E8B /* queuing_mutex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = queuing_mutex.h; sourceTree = "<group>"; };
-		8834F54625574FBC00FC9E8B /* partitioner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = partitioner.h; sourceTree = "<group>"; };
-		8834F54725574FBC00FC9E8B /* recursive_mutex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = recursive_mutex.h; sourceTree = "<group>"; };
-		8834F54825574FBC00FC9E8B /* mutex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mutex.h; sourceTree = "<group>"; };
-		8834F54925574FBC00FC9E8B /* tbb_allocator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tbb_allocator.h; sourceTree = "<group>"; };
-		8834F54A25574FBC00FC9E8B /* blocked_range3d.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = blocked_range3d.h; sourceTree = "<group>"; };
-		8834F54B25574FBC00FC9E8B /* parallel_scan.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = parallel_scan.h; sourceTree = "<group>"; };
-		8834F54C25574FBC00FC9E8B /* queuing_rw_mutex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = queuing_rw_mutex.h; sourceTree = "<group>"; };
-		8834F54D25574FBC00FC9E8B /* spin_mutex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = spin_mutex.h; sourceTree = "<group>"; };
-		8834F54E25574FBC00FC9E8B /* concurrent_unordered_set.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = concurrent_unordered_set.h; sourceTree = "<group>"; };
-		8834F54F25574FBC00FC9E8B /* aggregator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = aggregator.h; sourceTree = "<group>"; };
-		8834F55025574FBC00FC9E8B /* blocked_range2d.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = blocked_range2d.h; sourceTree = "<group>"; };
-		8834F55125574FBC00FC9E8B /* parallel_for_each.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = parallel_for_each.h; sourceTree = "<group>"; };
-		8834F55225574FBC00FC9E8B /* parallel_while.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = parallel_while.h; sourceTree = "<group>"; };
-		8834F55325574FBC00FC9E8B /* tick_count.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tick_count.h; sourceTree = "<group>"; };
-		8834F55425574FBC00FC9E8B /* tbb_config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tbb_config.h; sourceTree = "<group>"; };
-		8834F55525574FBC00FC9E8B /* parallel_sort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = parallel_sort.h; sourceTree = "<group>"; };
-		8834F55625574FBC00FC9E8B /* atomic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = atomic.h; sourceTree = "<group>"; };
+		887128FE2566241100A2E4A4 /* heuristics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = heuristics.h; sourceTree = "<group>"; };
+		8871290025662AAD00A2E4A4 /* helper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = helper.h; sourceTree = "<group>"; };
 		88A0E68A254E28C90041A4C1 /* PBNA* */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "PBNA*"; sourceTree = BUILT_PRODUCTS_DIR; };
 		88A0E68D254E28C90041A4C1 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -121,121 +40,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8834F50025574FBC00FC9E8B /* tbb */ = {
-			isa = PBXGroup;
-			children = (
-				8834F50125574FBC00FC9E8B /* combinable.h */,
-				8834F50225574FBC00FC9E8B /* tbb.h */,
-				8834F50325574FBC00FC9E8B /* concurrent_unordered_map.h */,
-				8834F50425574FBC00FC9E8B /* memory_pool.h */,
-				8834F50525574FBC00FC9E8B /* task.h */,
-				8834F50625574FBC00FC9E8B /* concurrent_hash_map.h */,
-				8834F50725574FBC00FC9E8B /* runtime_loader.h */,
-				8834F50825574FBC00FC9E8B /* enumerable_thread_specific.h */,
-				8834F50925574FBC00FC9E8B /* compat */,
-				8834F50E25574FBC00FC9E8B /* index.html */,
-				8834F50F25574FBC00FC9E8B /* scalable_allocator.h */,
-				8834F51025574FBC00FC9E8B /* task_scheduler_init.h */,
-				8834F51125574FBC00FC9E8B /* concurrent_lru_cache.h */,
-				8834F51225574FBC00FC9E8B /* parallel_invoke.h */,
-				8834F51325574FBC00FC9E8B /* task_group.h */,
-				8834F51425574FBC00FC9E8B /* tbb_machine.h */,
-				8834F51525574FBC00FC9E8B /* task_scheduler_observer.h */,
-				8834F51625574FBC00FC9E8B /* aligned_space.h */,
-				8834F51725574FBC00FC9E8B /* concurrent_priority_queue.h */,
-				8834F51825574FBC00FC9E8B /* tbb_thread.h */,
-				8834F51925574FBC00FC9E8B /* internal */,
-				8834F52525574FBC00FC9E8B /* parallel_reduce.h */,
-				8834F52625574FBC00FC9E8B /* cache_aligned_allocator.h */,
-				8834F52725574FBC00FC9E8B /* null_mutex.h */,
-				8834F52825574FBC00FC9E8B /* blocked_range.h */,
-				8834F52925574FBC00FC9E8B /* tbb_stddef.h */,
-				8834F52A25574FBC00FC9E8B /* critical_section.h */,
-				8834F52B25574FBC00FC9E8B /* spin_rw_mutex.h */,
-				8834F52C25574FBC00FC9E8B /* tbb_profiling.h */,
-				8834F52D25574FBC00FC9E8B /* tbb_exception.h */,
-				8834F52E25574FBC00FC9E8B /* reader_writer_lock.h */,
-				8834F52F25574FBC00FC9E8B /* flow_graph.h */,
-				8834F53025574FBC00FC9E8B /* machine */,
-				8834F53E25574FBC00FC9E8B /* concurrent_vector.h */,
-				8834F53F25574FBC00FC9E8B /* parallel_do.h */,
-				8834F54025574FBC00FC9E8B /* null_rw_mutex.h */,
-				8834F54125574FBC00FC9E8B /* parallel_for.h */,
-				8834F54225574FBC00FC9E8B /* tbbmalloc_proxy.h */,
-				8834F54325574FBC00FC9E8B /* pipeline.h */,
-				8834F54425574FBC00FC9E8B /* concurrent_queue.h */,
-				8834F54525574FBC00FC9E8B /* queuing_mutex.h */,
-				8834F54625574FBC00FC9E8B /* partitioner.h */,
-				8834F54725574FBC00FC9E8B /* recursive_mutex.h */,
-				8834F54825574FBC00FC9E8B /* mutex.h */,
-				8834F54925574FBC00FC9E8B /* tbb_allocator.h */,
-				8834F54A25574FBC00FC9E8B /* blocked_range3d.h */,
-				8834F54B25574FBC00FC9E8B /* parallel_scan.h */,
-				8834F54C25574FBC00FC9E8B /* queuing_rw_mutex.h */,
-				8834F54D25574FBC00FC9E8B /* spin_mutex.h */,
-				8834F54E25574FBC00FC9E8B /* concurrent_unordered_set.h */,
-				8834F54F25574FBC00FC9E8B /* aggregator.h */,
-				8834F55025574FBC00FC9E8B /* blocked_range2d.h */,
-				8834F55125574FBC00FC9E8B /* parallel_for_each.h */,
-				8834F55225574FBC00FC9E8B /* parallel_while.h */,
-				8834F55325574FBC00FC9E8B /* tick_count.h */,
-				8834F55425574FBC00FC9E8B /* tbb_config.h */,
-				8834F55525574FBC00FC9E8B /* parallel_sort.h */,
-				8834F55625574FBC00FC9E8B /* atomic.h */,
-			);
-			name = tbb;
-			path = ../../../../../tbb/include/tbb;
-			sourceTree = "<group>";
-		};
-		8834F50925574FBC00FC9E8B /* compat */ = {
-			isa = PBXGroup;
-			children = (
-				8834F50A25574FBC00FC9E8B /* tuple */,
-				8834F50B25574FBC00FC9E8B /* ppl.h */,
-				8834F50C25574FBC00FC9E8B /* condition_variable */,
-				8834F50D25574FBC00FC9E8B /* thread */,
-			);
-			path = compat;
-			sourceTree = "<group>";
-		};
-		8834F51925574FBC00FC9E8B /* internal */ = {
-			isa = PBXGroup;
-			children = (
-				8834F51A25574FBC00FC9E8B /* _flow_graph_types_impl.h */,
-				8834F51B25574FBC00FC9E8B /* _aggregator_impl.h */,
-				8834F51C25574FBC00FC9E8B /* _concurrent_unordered_impl.h */,
-				8834F51D25574FBC00FC9E8B /* _flow_graph_node_impl.h */,
-				8834F51E25574FBC00FC9E8B /* _flow_graph_or_impl.h */,
-				8834F51F25574FBC00FC9E8B /* _concurrent_queue_impl.h */,
-				8834F52025574FBC00FC9E8B /* _flow_graph_item_buffer_impl.h */,
-				8834F52125574FBC00FC9E8B /* _flow_graph_tagged_buffer_impl.h */,
-				8834F52225574FBC00FC9E8B /* _tbb_windef.h */,
-				8834F52325574FBC00FC9E8B /* _flow_graph_impl.h */,
-				8834F52425574FBC00FC9E8B /* _flow_graph_join_impl.h */,
-			);
-			path = internal;
-			sourceTree = "<group>";
-		};
-		8834F53025574FBC00FC9E8B /* machine */ = {
-			isa = PBXGroup;
-			children = (
-				8834F53125574FBC00FC9E8B /* linux_intel64.h */,
-				8834F53225574FBC00FC9E8B /* linux_ia64.h */,
-				8834F53325574FBC00FC9E8B /* xbox360_ppc.h */,
-				8834F53425574FBC00FC9E8B /* sunos_sparc.h */,
-				8834F53525574FBC00FC9E8B /* windows_api.h */,
-				8834F53625574FBC00FC9E8B /* windows_intel64.h */,
-				8834F53725574FBC00FC9E8B /* ibm_aix51.h */,
-				8834F53825574FBC00FC9E8B /* mac_ppc.h */,
-				8834F53925574FBC00FC9E8B /* gcc_generic.h */,
-				8834F53A25574FBC00FC9E8B /* windows_ia32.h */,
-				8834F53B25574FBC00FC9E8B /* linux_common.h */,
-				8834F53C25574FBC00FC9E8B /* macos_common.h */,
-				8834F53D25574FBC00FC9E8B /* linux_ia32.h */,
-			);
-			path = machine;
-			sourceTree = "<group>";
-		};
 		88A0E681254E28C90041A4C1 = {
 			isa = PBXGroup;
 			children = (
@@ -256,7 +60,8 @@
 			isa = PBXGroup;
 			children = (
 				88A0E68D254E28C90041A4C1 /* main.cpp */,
-				8834F50025574FBC00FC9E8B /* tbb */,
+				887128FE2566241100A2E4A4 /* heuristics.h */,
+				8871290025662AAD00A2E4A4 /* helper.h */,
 			);
 			path = "PBNA*";
 			sourceTree = "<group>";

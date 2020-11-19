@@ -7,7 +7,10 @@
  *
  *  This programs acts as a proof of concept for a
  *  problem of multi agent path finding. It makes
- *  use of multithreading on C++.
+ *  use of multithreading on C++. Due to time restrictions
+ *  solution is limited to 2 agents, but it can be amplified.
+ *
+ *  Program driver.
  */
 
 
@@ -22,6 +25,8 @@
 #include <stack>
 #include <cfloat>
 #include <set>
+#include "heuristics.h"
+#include "helper.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -53,92 +58,14 @@ int explorationSpace[ROW][COL] =
 };
 
 // Mutex for structure blocking
-mutex map_mutex;
 mutex vector_mutex;
-
-// Creating a shortcut for int, int pair type
-typedef pair<int, int> Pair;
-
-// Creating a shortcut for pair<int, pair<int, int>> type
-typedef pair<double, pair<int, int>> pPair;
-
-// A structure to hold the neccesary parameters
-struct cell
-{
-    // Row and Column index of its parent
-    // Note that 0 <= i <= ROW-1 & 0 <= j <= COL-1
-    int parent_i, parent_j;
-    // f = g + h
-    double f, g, h;
-};
-
-// Struct that holds the identifier for each agent and its priority
-struct agent {
-    int id;
-    int priority;
-    bool hasCompleted;
-};
 
 // Shared map structure
 vector<pair<pair<int, int>, list<agent>>> sharedVector;
 
-
-// This is an strucure which implements the
-// operator overlading (F should be lesser)
-struct CompareF {
-    bool operator()(cell const& c1, cell const& c2)
-    {
-        // return "true" if "p1" is ordered
-        // before "p2", for example:
-        return c1.f < c2.f;
-    }
-};
-
-// A Utility Function to check whether given cell (row, col)
-// is a valid cell or not.
-bool isValid(int row, int col)
-{
-    // Returns true if row number and column number
-    // is in range
-    return (row >= 0) && (row < ROW) && (col >= 0) && (col < COL);
-}
-
-// A Utility Function to check whether the given cell is
-// blocked or not
-bool isUnBlocked(int row, int col)
-{
-    // Returns true if the cell is not blocked else false
-    if (explorationSpace[row][col] == 0){
-        return true;
-    }else{
-        return false;
-    }
-}
-
-// A Utility Function to check whether destination cell has
-// been reached or not
-bool isDestination(int row, int col, Pair dest)
-{
-    if (row == dest.first && col == dest.second){
-        return true;
-    }
-    else{
-        return false;
-    }
-}
-
-// A Utility Function to calculate the 'h' heuristics.
-double calculateHValue(int row, int col, Pair dest)
-{
-    // Return using the Manhattan distance, which returns "total" cells apart, considering we can move in 4 directions
-    double h = abs(row - dest.first) + abs(col - dest.second);
-    // printf("Manhattan value for cell %i %i is %f\n", row, col, h);
-    return h;
-}
-
 // Function to update the shared structure
 void updateSharedVector(pair<int, int> coordinates, agent currAgent){
-    // map_mutex is automatically released when lock goes out of scope
+    // The mutex is automatically released when lock goes out of scope
     const lock_guard<mutex> lock(vector_mutex);
     
     bool foundFlag = false;
@@ -156,10 +83,8 @@ void updateSharedVector(pair<int, int> coordinates, agent currAgent){
     }
 }
 
-
-// A Utility Function to trace the path from the source
-// to destination
-void tracePath(cell cellDetails[][COL], Pair dest, agent currAgent)
+// Function for tracing the path from the source to destination
+void tracePath(cell cellDetails[ROW][COL], Pair dest, agent currAgent)
 {
     int row = dest.first;
     int col = dest.second;
@@ -186,9 +111,7 @@ void tracePath(cell cellDetails[][COL], Pair dest, agent currAgent)
     return;
 }
 
-// A Function to find the shortest path between
-// a given source cell to a destination cell according
-// to A* Search Algorithm
+// Performing A* search algorithm
 void aStarSearch(Pair src, Pair dest, agent currAgent)
 {
     // If the source is out of range
@@ -204,14 +127,6 @@ void aStarSearch(Pair src, Pair dest, agent currAgent)
         printf ("Destination is invalid\n");
         return;
     }
-
-    // Either the source or the destination is blocked
-    /*if (isUnBlocked(src.first, src.second) == false ||
-            isUnBlocked(dest.first, dest.second) == false)
-    {
-        printf ("Source or the destination is blocked\n");
-        return;
-    }*/
 
     // If the destination cell is the same as source cell
     if (isDestination(src.first, src.second, dest) == true)
@@ -256,19 +171,17 @@ void aStarSearch(Pair src, Pair dest, agent currAgent)
     Create an open list having information as-
     <f, <i, j>>
     where f = g + h,
-    and i, j are the row and column index of that cell
-    Note that 0 <= i <= ROW-1 & 0 <= j <= COL-1
+    and i, j are the row and column index of that cell.
     This open list is implemented as a set of pair of pair.
     Sets will always mantain elements in order, sorting first
-    by the f value and then by i and j, ascendingly.*/
+    by the f value and then by i and j, ascendingly.
+     */
     set<pPair> openList;
 
-    // Put the starting cell on the open list and set its
-    // 'f' as 0, since we have not moved
+    // Put the starting cell on the open list and set its 'f' as 0
     openList.insert(make_pair (0.0, make_pair (i, j)));
 
-    // We set this boolean value as false as initially
-    // the destination is not reached.
+    // We set this boolean value as false as destination is not reached
     bool foundDest = false;
 
     while (!openList.empty())
@@ -283,21 +196,21 @@ void aStarSearch(Pair src, Pair dest, agent currAgent)
         j = p.second.second;
         closedList[i][j] = true;
     
-    /*
+      /*
         Generating all the 4 successor of this cell
 
-               N [i-1][j]
-               |
-[i][j-1] W -- Cell [i][j] -- E [i][j+1]
-               |
-               S [i+1][j]
+                   N [i-1][j]
+                   |
+    [i][j-1] W -- Cell [i][j] -- E [i][j+1]
+                   |
+                   S [i+1][j]
 
         Cell-->Popped Cell (i, j)
         N --> North    (i-1, j)
         S --> South    (i+1, j)
         E --> East     (i, j+1)
         W --> West     (i, j-1)
-     */
+       */
 
         // To store the 'g', 'h' and 'f' of the 4 successors
         double gNew, hNew, fNew;
@@ -307,29 +220,26 @@ void aStarSearch(Pair src, Pair dest, agent currAgent)
         // Only process this cell if this is a valid one
         if (isValid(i-1, j))
         {
-            // If the destination cell is the same as the
-            // current successor
+            // If the destination cell is the same as the successor
             if (isDestination(i-1, j, dest))
             {
-                // Set the Parent of the destination cell
+                // Set the oarent of the destination cell
                 cellDetails[i-1][j].parent_i = i;
                 cellDetails[i-1][j].parent_j = j;
                 tracePath (cellDetails, dest, currAgent);
                 foundDest = true;
                 return;
             }
-            // If the successor is already on the closed
-            // list or if it is blocked, then ignore it.
-            else if (closedList[i-1][j] == false && isUnBlocked(i-1, j) == true)
+            // If the successor is already on the closed or blocked, ignore.
+            else if (closedList[i-1][j] == false && isUnBlocked(i-1, j, explorationSpace) == true)
             {
-                gNew = cellDetails[i][j].g + 1.0; // Adding one to the cost, since I am moving 1 pos
-                hNew = calculateHValue (i-1, j, dest); // Manhattan distance call
+                // Adding one to the cost, since I am moving 1 pos
+                gNew = cellDetails[i][j].g + 1.0;
+                hNew = calculateManhattanValue(i - 1, j, dest.first, dest.second);
                 fNew = gNew + hNew;
 
-                // If it isn’t on the open list, add it to
-                // the open list. Or, if it is on the open list already, check
-                // to see if this path to that square is better,
-                // using 'f' cost as the measure.
+                // If it isn’t on the open list, add it
+                // If the new cost is lesser than past cost, add it too, since we have found a better path
                 if (cellDetails[i-1][j].f == FLT_MAX || cellDetails[i-1][j].f > fNew)
                 {
                     openList.insert(make_pair(fNew, make_pair(i-1, j)));
@@ -355,10 +265,10 @@ void aStarSearch(Pair src, Pair dest, agent currAgent)
                 foundDest = true;
                 return;
             }
-            else if (closedList[i+1][j] == false && isUnBlocked(i+1, j) == true)
+            else if (closedList[i+1][j] == false && isUnBlocked(i+1, j, explorationSpace) == true)
             {
                 gNew = cellDetails[i][j].g + 1.0;
-                hNew = calculateHValue(i+1, j, dest);
+                hNew = calculateManhattanValue(i + 1, j, dest.first, dest.second); // Manhattan distance call
                 fNew = gNew + hNew;
 
                 if (cellDetails[i+1][j].f == FLT_MAX || cellDetails[i+1][j].f > fNew)
@@ -385,10 +295,10 @@ void aStarSearch(Pair src, Pair dest, agent currAgent)
                 foundDest = true;
                 return;
             }
-            else if (closedList[i][j+1] == false && isUnBlocked (i, j+1) == true)
+            else if (closedList[i][j+1] == false && isUnBlocked (i, j+1, explorationSpace) == true)
             {
                 gNew = cellDetails[i][j].g + 1.0;
-                hNew = calculateHValue (i, j+1, dest);
+                hNew = calculateManhattanValue(i, j + 1, dest.first, dest.second); // Manhattan distance call
                 fNew = gNew + hNew;
 
                 if (cellDetails[i][j+1].f == FLT_MAX || cellDetails[i][j+1].f > fNew)
@@ -415,10 +325,10 @@ void aStarSearch(Pair src, Pair dest, agent currAgent)
                 foundDest = true;
                 return;
             }
-            else if (closedList[i][j-1] == false && isUnBlocked(i, j-1) == true)
+            else if (closedList[i][j-1] == false && isUnBlocked(i, j-1, explorationSpace) == true)
             {
                 gNew = cellDetails[i][j].g + 1.0;
-                hNew = calculateHValue(i, j-1, dest);
+                hNew = calculateManhattanValue(i, j - 1, dest.first, dest.second); // Manhattan distance call
                 fNew = gNew + hNew;
 
                 if (cellDetails[i][j-1].f == FLT_MAX || cellDetails[i][j-1].f > fNew)
@@ -434,48 +344,26 @@ void aStarSearch(Pair src, Pair dest, agent currAgent)
         }
     }
 
-    // When the destination cell is not found and the open
-    // list is empty, means we were not able to reach the cell.
+    // When the destination cell is not found and the open list is empty, we did not reach the cell.
     if (foundDest == false){
         cout << "Failed to find destination cell" << endl;
     }
-    
     return;
 }
 
 // Cleans the occurences of determined agent on a grid
-void removeAgentOccupied(int agentId){ // TODO: Leave start and end point!
+void removeAgentOccupied(int agentId, Pair srcNode, Pair destNode){
     for(int i = 0; i < ROW; i++){
         for(int j = 0; j < COL; j++){
-            if (explorationSpace[i][j] == agentId) {
-                explorationSpace[i][j] = 0;
+            if((srcNode.first == i && srcNode.second == j) || (destNode.first == i && srcNode.second == j)){
+                continue;
+            }else{
+                if (explorationSpace[i][j] == agentId) {
+                    explorationSpace[i][j] = 0;
+                }
             }
         }
     }
-}
-
-// Prints the content of the shared structure
-void printSharedMapVector(){
-    cout << "Vector content: " << endl;
-    for(int i = 0; i < sharedVector.size(); i++){
-        cout << "coordinates: " << sharedVector.at(i).first.first << " " <<  sharedVector.at(i).first.second << endl << "agents: " << endl;
-        for (auto const& agent:  sharedVector.at(i).second){
-            cout << agent.id << " ";
-        }
-        cout << endl;
-    }
-}
-
-// Function that prints current exploration space
-void printGrid(){
-    cout << "\nEXPLORATION SPACE " << endl;
-    for(int i = 0; i < ROW; i++){
-        for(int j = 0; j < COL; j++){
-            cout << explorationSpace[i][j] << " ";
-        }
-        cout << endl;
-    }
-    cout << endl;
 }
 
 Pair backtrack(Pair source, int agentId){
@@ -510,10 +398,9 @@ Pair backtrack(Pair source, int agentId){
 int main()
 {
     // Provide the initial grid configuration
-    printGrid();
+    printGrid(explorationSpace);
 
-    // Capture relevant data for both agents
-    
+    // Capture data for both agents
     int x1, y1, x2, y2, p1;
 
     while (true) {
@@ -523,7 +410,7 @@ int main()
         cin >> x2 >> y2;
         if(x1 == x2 && y1 == y2){
             cout << "Start and end point cannot be the same." << endl;
-        } else if((!isValid(x1, y1) || !isValid(x2, y2)) || (!isUnBlocked(x1, y1) && !isUnBlocked(x2, y2))) {
+        } else if((!isValid(x1, y1) || !isValid(x2, y2)) || (!isUnBlocked(x1, y1, explorationSpace) || !isUnBlocked(x2, y2, explorationSpace))) {
             cout << "Given point(s) is blocked or not valid, try again." << endl;
         } else {
             break;
@@ -553,7 +440,7 @@ int main()
         cin >> x22 >> y22;
         if(x11 == x22 && y11 == y22){
             cout << "Start and end point cannot be the same." << endl;
-        }else if((!isValid(x11, y11) || !isValid(x22, y22)) || (!isUnBlocked(x11, y11) && !isUnBlocked(x22, y22)) || ((x1 == x11 && y1 == y11) || (x1 == x22 && y1 == y22) || (x2 == x11 && y2 == y11) || (x2 == x22 && y2 == y22))) {
+        }else if((!isValid(x11, y11) || !isValid(x22, y22)) || (!isUnBlocked(x11, y11, explorationSpace) || !isUnBlocked(x22, y22, explorationSpace)) || ((x1 == x11 && y1 == y11) || (x1 == x22 && y1 == y22) || (x2 == x11 && y2 == y11) || (x2 == x22 && y2 == y22))) {
             cout << "Given point(s) is blocked or not valid, try again." << endl;
         }else{
             break;
@@ -561,7 +448,6 @@ int main()
     }
     
     // Having a lower number on the priority, means they are going to be solved first
-    
     while (true) {
         cout << "Please give me the priority for second agent (1 or 2): " << endl;
         cin >> p2;
@@ -575,9 +461,8 @@ int main()
         }
     }
     
-    int id1, id2;
-    
     // This identifiers are just to display and identify final routes for agents
+    int id1, id2;
     
     while (true) {
         cout << "Finally, give me an identifier for both agents: " << endl;
@@ -607,23 +492,18 @@ int main()
        false
     };
     
-    cout << "Grid with agents placed: " << endl;
-    
+    // Place start and end points for agents
     explorationSpace[src1.first][src1.second] = a1.id;
     explorationSpace[src2.first][src2.second] = a2.id;
     
     explorationSpace[dest1.first][dest1.second] = a1.id;
     explorationSpace[dest2.first][dest2.second] = a2.id;
-    
-    printGrid();
-            
+                
     // While agents still need to reach their goal
     while (!a1.hasCompleted || !a2.hasCompleted) {
             bool a1Started = false, a2Started = false;
         
             if(!a1.hasCompleted && !a2.hasCompleted){
-                cout << "starting agent " << a1.id << " with coordinates: " << src1.first << " " << src1.second << endl;
-                cout << "starting agent " << a2.id << " with coordinates: " << src2.first << " " << src2.second << endl;
                 thread th1(aStarSearch, src1, dest1, a1);
                 thread th2(aStarSearch, src2, dest2, a2);
                 // Speed improvement is here, the optimistic assumption makes it
@@ -633,19 +513,15 @@ int main()
             } else if (!a1.hasCompleted) {
                 a2Started  = true;
                 cout << "Agent 1 has not finished... wait..." << endl << endl;
-                cout << "starting agent " << a1.id << " with coordinates: " << src1.first << " " << src1.second << endl;
                 thread th1(aStarSearch, src1, dest1, a1);
                 th1.join();
             } else if(!a2.hasCompleted) {
                 a1Started = true;
                 cout << "Agent 2 has not finished... wait..." << endl << endl;
-                cout << "starting agent " << a2.id << " with coordinates: " << src2.first << " " << src2.second << endl;
                 thread th2(aStarSearch, src2, dest2, a2);
                 th2.join();
             }
-        
-            printSharedMapVector();
-        
+                
             bool collisionFound = false, a1Blocked = false, a2Blocked = false;
             if(sharedVector.size() > 0){
                 // Check for collisions and update map
@@ -654,7 +530,7 @@ int main()
                     if(elem.second.size() == 1){
                         if(elem.second.front().id == a1.id && !a1Blocked){
                             if(elem.first.first == dest1.first && elem.first.second == dest1.second){
-                                cout << "reached goal for agent 1" << endl;
+                                cout << "Agent 1 completed " << endl;
                                 a1.hasCompleted = true;
                             }
                             explorationSpace[elem.first.first][elem.first.second] = a1.id;
@@ -662,7 +538,7 @@ int main()
                         }
                         if(elem.second.front().id == a2.id && !a2Blocked){
                             if(elem.first.first == dest2.first && elem.first.second == dest2.second){
-                                cout << "reached goal for agent 2" << endl;
+                                cout << "Agent 2 completed " << endl;
                                 a2.hasCompleted = true;
                             }
                             explorationSpace[elem.first.first][elem.first.second] = a2.id;
@@ -676,24 +552,26 @@ int main()
                         agent second = elem.second.front();
                         if(first.priority < second.priority){
                             explorationSpace[elem.first.first][elem.first.second] = first.id;
-                            removeAgentOccupied(second.id);
                             if(first.id == a1.id){
+                                removeAgentOccupied(a2.id, src2, dest2);
                                 a2Blocked = true;
                                 cout << "Agent 1 completed " << endl;
                                 a1.hasCompleted = true;
                             }else{
+                                removeAgentOccupied(a1.id, src1, dest1);
                                 a1Blocked = true;
                                 cout << "Agent 2 completed " << endl;
                                 a2.hasCompleted = true;
                             }
                         }else{
                             explorationSpace[elem.first.first][elem.first.second] = second.id;
-                            removeAgentOccupied(first.id);
                             if(second.id == a1.id){
+                                removeAgentOccupied(a2.id, src2, dest2);
                                 a2Blocked = true;
                                 cout << "Agent 1 completed " << endl;
                                 a1.hasCompleted = true;
                             }else{
+                                removeAgentOccupied(a1.id, src1, dest1);
                                 a1Blocked = true;
                                 cout << "Agent 2 completed " << endl;
                                 a2.hasCompleted = true;
@@ -702,7 +580,7 @@ int main()
                     }
                 }
                 
-                // Mark all agents as arrived! This could actually happen at the first run, thus, saves time
+                // Mark all agents as arrived! This could actually happen at the first run
                 if(!collisionFound && a1Started && a2Started){
                     cout << "All agents been placed!" << endl;
                     a1.hasCompleted = true;
@@ -710,33 +588,26 @@ int main()
                 }else{
                     // Perform backtrack
                     if(!a1.hasCompleted){
-                        cout << "Will backtrack agent " << a1.id << " old coordinates " << src1.first << " " << src1.second << endl;
                         Pair aux = backtrack(src1, a1.id);
                         if(aux.first != -1 && aux.second != -1){
                             src1 = aux;
                         }
-                        
-                        cout << "Will backtrack agent " << a1.id << " new coordinates " << src1.first << " " << src1.second << endl;
                     }else if(!a2.hasCompleted){
-                        cout << "Will backtrack agent " << a2.id << " old coordinates " << src2.first << " " << src2.second << endl;
                         Pair aux = backtrack(src2, a2.id);
                         if(aux.first != -1 && aux.second != -1){
                             src2 = aux;
                         }
-                        cout << "Will backtrack agent " << a2.id << " new coordinates " << src2.first << " " << src2.second << endl;
                     }
                 }
                 
                 // Clear the shared DS
                 sharedVector.clear();
-                cout << "Clearing grid" << endl;
-                printSharedMapVector();
                 // Print the new configuration
-                printGrid();
+                printGrid(explorationSpace);
             }else{
                 cout << "Not all agents could be routed" << endl << endl;
                 // Print the final configuration if so
-                printGrid();
+                printGrid(explorationSpace);
                 break;
             }
         }
