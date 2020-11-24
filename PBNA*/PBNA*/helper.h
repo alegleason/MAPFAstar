@@ -26,8 +26,8 @@ Everyone is permitted to copy and distribute verbatim copies of this license doc
 #ifndef helper_h
 #define helper_h
 
-#define ROW 15
-#define COL 15
+#define ROW 16
+#define COL 18
 
 // Creating a shortcut for int, int pair type
 typedef pair<int, int> Pair;

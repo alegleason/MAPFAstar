@@ -41,29 +41,30 @@ Everyone is permitted to copy and distribute verbatim copies of this license doc
 using namespace std;
 using namespace std::chrono;
 
-#define ROW 15
-#define COL 15
+#define ROW 16
+#define COL 18
 
 /* Description of the Grid:
 0--> The cell is not blocked
 1--> The cell is blocked */
 int explorationSpace[ROW][COL] =
 {
-    {0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0},
-    {0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0},
-    {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0},
-    {0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0},
-    {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0},
-    {0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0},
-    {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0},
-    {1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-    {0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0},
-    {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0},
-    {0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0},
-    {0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1},
-    {0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0},
-    {0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0},
-    {0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0},
+    {0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0},
+    {0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1},
+    {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0},
+    {0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0},
+    {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+    {0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1},
+    {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1},
+    {1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+    {0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1},
+    {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1},
+    {0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0},
+    {0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1},
+    {0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+    {0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1},
+    {0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+    {0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0}
 };
 
 // Mutex for structure blocking
@@ -503,7 +504,10 @@ int main()
     
     explorationSpace[dest1.first][dest1.second] = a1.id;
     explorationSpace[dest2.first][dest2.second] = a2.id;
-                
+            
+    // Start timer
+    auto start = std::chrono::high_resolution_clock::now();
+    
     // While agents still need to reach their goal
     while (!a1.hasCompleted || !a2.hasCompleted) {
             bool a1Started = false, a2Started = false;
@@ -582,6 +586,10 @@ int main()
                 
                 // Mark all agents as arrived! This could actually happen at the first run
                 if(!collisionFound && a1Started && a2Started){
+                    // End timer
+                    auto finish = std::chrono::high_resolution_clock::now();
+                    std::chrono::duration<double> elapsed = finish - start;
+                    //std::cout << "Elapsed time: " << elapsed.count() << " s\n";
                     cout << "All agents been placed!" << endl;
                     a1.hasCompleted = true;
                     a2.hasCompleted = true;

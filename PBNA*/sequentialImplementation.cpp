@@ -13,8 +13,31 @@
 using namespace std;
 using namespace std::chrono;
 
-#define ROW 4
-#define COL 4
+#define ROW 16
+#define COL 18
+
+/* Description of the Grid-
+0--> The cell is not blocked
+1--> The cell is blocked */
+int grid[ROW][COL] =
+{
+    {0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0},
+    {0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1},
+    {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0},
+    {0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0},
+    {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+    {0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1},
+    {0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1},
+    {1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+    {0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1},
+    {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1},
+    {0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0},
+    {0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1},
+    {0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+    {0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1},
+    {0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+    {0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0}
+};
 
 // Creating a shortcut for int, int pair type
 typedef pair<int, int> Pair;
@@ -74,7 +97,7 @@ double calculateHValue(int row, int col, Pair dest)
 
 // A Utility Function to trace the path from the source
 // to destination
-void tracePath(cell cellDetails[][COL], Pair dest)
+void tracePath(cell cellDetails[][COL], Pair dest, int agentId)
 {
     printf ("\nThe Path is ");
     int row = dest.first;
@@ -98,6 +121,7 @@ void tracePath(cell cellDetails[][COL], Pair dest)
         pair<int,int> p = Path.top();
         Path.pop();
         printf("-> (%d,%d) ",p.first,p.second);
+        grid[p.first][p.second] = agentId;
     }
 
     return;
@@ -106,10 +130,8 @@ void tracePath(cell cellDetails[][COL], Pair dest)
 // A Function to find the shortest path between
 // a given source cell to a destination cell according
 // to A* Search Algorithm
-void aStarSearchSequential(int grid[ROW][COL], Pair src, Pair dest)
+void aStarSearchSequential(int grid[ROW][COL], Pair src, Pair dest, int agentId)
 {
-    auto start = high_resolution_clock::now();
-
     // If the source is out of range
     if (isValid (src.first, src.second) == false)
     {
@@ -235,10 +257,7 @@ void aStarSearchSequential(int grid[ROW][COL], Pair src, Pair dest)
                 cellDetails[i-1][j].parent_i = i;
                 cellDetails[i-1][j].parent_j = j;
                 printf ("The destination cell is found\n\n");
-                auto stop = high_resolution_clock::now();
-                auto duration = duration_cast<microseconds>(stop - start);
-                cout << "Total Elapsed Time (Sequential): " << duration.count() << endl;
-                tracePath (cellDetails, dest);
+                tracePath (cellDetails, dest, agentId);
                 foundDest = true;
                 return;
             }
@@ -289,10 +308,7 @@ make_pair(i-1, j)));
                 cellDetails[i+1][j].parent_i = i;
                 cellDetails[i+1][j].parent_j = j;
                 printf ("The destination cell is found\n\n");
-                auto stop = high_resolution_clock::now();
-                auto duration = duration_cast<microseconds>(stop - start);
-                cout << "Total Elapsed Time (Sequential): " << duration.count() << endl;
-                tracePath(cellDetails, dest);
+                tracePath(cellDetails, dest, agentId);
                 foundDest = true;
                 return;
             }
@@ -341,10 +357,7 @@ make_pair(i-1, j)));
                 cellDetails[i][j+1].parent_i = i;
                 cellDetails[i][j+1].parent_j = j;
                 printf ("The destination cell is found\n\n");
-                auto stop = high_resolution_clock::now();
-                auto duration = duration_cast<microseconds>(stop - start);
-                cout << "Total Elapsed Time (Sequential): " << duration.count() << endl;
-                tracePath(cellDetails, dest);
+                tracePath(cellDetails, dest, agentId);
                 foundDest = true;
                 return;
             }
@@ -395,10 +408,7 @@ make_pair(i-1, j)));
                 cellDetails[i][j-1].parent_i = i;
                 cellDetails[i][j-1].parent_j = j;
                 printf ("The destination cell is found\n\n");
-                auto stop = high_resolution_clock::now();
-                auto duration = duration_cast<microseconds>(stop - start);
-                cout << "Total Elapsed Time (Sequential): " << duration.count() << endl;
-                tracePath(cellDetails, dest);
+                tracePath(cellDetails, dest, agentId);
                 foundDest = true;
                 return;
             }
@@ -444,9 +454,6 @@ make_pair(i-1, j)));
     // there is no way to destination cell (due to blockages)
     if (foundDest == false)
         printf("Failed to find the Destination Cell\n\n");
-        auto stop = high_resolution_clock::now();
-        auto duration = duration_cast<microseconds>(stop - start);
-        cout << "Total Elapsed Time (Sequential): " << duration.count() << endl;
 
     return;
 }
@@ -455,32 +462,31 @@ make_pair(i-1, j)));
 // Driver program to test above function
 int main()
 {
-    /* Description of the Grid-
-    0--> The cell is not blocked
-    1--> The cell is blocked */
-    int grid[ROW][COL] =
-    {
-        {0, 0, 1, 0},
-        {0, 0, 1, 0},
-        {1, 0, 0, 1},
-        {0, 1, 0, 0},
-    };
     
-    //may return 0 when not able to detect
-    const auto processor_count = std::thread::hardware_concurrency();
     
-    cout << "Detected cores: " << processor_count << endl << endl;
+    // Start timer
+    auto start = std::chrono::high_resolution_clock::now();
 
     // Source is the left-most bottom-most corner
     Pair src = make_pair(0, 0);
 
     // Destination is the left-most top-most corner
-    Pair dest = make_pair(3, 3);
+    Pair dest = make_pair(0, 17);
         
-    aStarSearchSequential(grid, src, dest);
+    aStarSearchSequential(grid, src, dest, 3);
     
-    // TODO: Run on an online platform to check times, else, clean memory with GC and destroy objects.
-    // TODO: On the documentation, to know it was actually implemented on GE's plaform, show screenshots with the new times and I/O, to prove it is actually implemented there.
+    // Source is the left-most bottom-most corner
+    src = make_pair(9, 0);
+
+    // Destination is the left-most top-most corner
+    dest = make_pair(15, 15);
+        
+    aStarSearchSequential(grid, src, dest, 4);
+    
+    auto finish = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsed = finish - start;
+    std::cout << "Elapsed time: " << elapsed.count() << " s\n";
+    cout << "All agents been placed!" << endl;
 
     return(0);
 }
