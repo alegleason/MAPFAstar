@@ -64,7 +64,6 @@ int explorationSpace[ROW][COL] =
     {0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0},
     {0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0},
     {0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0},
-
 };
 
 // Mutex for structure blocking
@@ -115,6 +114,7 @@ void tracePath(cell cellDetails[ROW][COL], Pair dest, agent currAgent)
     {
         pair<int,int> p = Path.top();
         Path.pop();
+        // The update operation is put until here, so that thread run as indenpendently as they can on their search process
         updateSharedVector(p, currAgent);
     }
     
@@ -385,13 +385,13 @@ Pair backtrack(Pair source, int agentId){
             return newCoordinates;
         }
         // 1st step: Find beginning point on the shared map structure
-        if(sharedVector.at(i).first.first == source.first && sharedVector.at(i).first.second == source.second){
+        if(sharedVector.at(i).first.first == source.first && sharedVector.at(i).first.second == source.second && sharedVector.at(i).second.front().id == agentId){
             foundStartCoordinates = true;
         }
         // 2nd step: Once we have found start coordinates, we can start to backtrack
         if(foundStartCoordinates){
-            if(sharedVector.at(i).second.size() == 1){
-                cout << "Bactracked to coordinates " << sharedVector.at(i).first.first << " " << sharedVector.at(i).first.second << endl;
+            if(sharedVector.at(i).second.size() == 1 && sharedVector.at(i).second.front().id == agentId){
+                cout << "backtracked!" << endl;
                 newCoordinates = sharedVector.at(i).first;
             }else if(sharedVector.at(i).second.size() > 1){
                 break;
@@ -427,6 +427,7 @@ int main()
         }
     }
     
+    // Having a lower number on the priority, means they are going to be solved first
     while (true) {
         cout << "Please give me the priority for first agent (1 or 2): " << endl;
         cin >> p1;
@@ -457,20 +458,14 @@ int main()
         }
     }
     
-    // Having a lower number on the priority, means they are going to be solved first
-    while (true) {
-        cout << "Please give me the priority for second agent (1 or 2): " << endl;
-        cin >> p2;
-        if(p2 != 1 && p2 != 2){
-            cout << "Priority goes from 1 to 2; 1 having greater priority. Try again." << endl;
-        }else if(p1 == p2){
-            cout << "Priorities for all agents must be different, try again." << endl;
-        }
-        else{
-            break;
-        }
+    if(p1 == 1){
+        p2 = 2;
+    }else{
+        p2 = 1;
     }
     
+    cout << "Agent 2 will have priority " << p2 << endl;
+        
     // This identifiers are just to display and identify final routes for agents
     int id1, id2;
     
@@ -533,20 +528,21 @@ int main()
             }
                 
             bool collisionFound = false, a1Blocked = false, a2Blocked = false;
+            // Find collision function
             if(sharedVector.size() > 0){
                 // Check for collisions and update map
                 for(auto elem : sharedVector)
                 {
                     if(elem.second.size() == 1){
                         if(elem.second.front().id == a1.id && !a1Blocked){
-                            if(elem.first.first == dest1.first && elem.first.second == dest1.second){
+                            if(elem.first.first == dest1.first && elem.first.second == dest1.second && !collisionFound){
                                 a1.hasCompleted = true;
                             }
                             explorationSpace[elem.first.first][elem.first.second] = a1.id;
                             a1Started = true;
                         }
                         if(elem.second.front().id == a2.id && !a2Blocked){
-                            if(elem.first.first == dest2.first && elem.first.second == dest2.second){
+                            if(elem.first.first == dest2.first && elem.first.second == dest2.second && !collisionFound){
                                 a2.hasCompleted = true;
                             }
                             explorationSpace[elem.first.first][elem.first.second] = a2.id;
