@@ -1,5 +1,5 @@
 # MAPFAstar
-Algorithm to route multiplied tailed agents to multiple goals using A* as the underlying planner.
+Algorithm to route multiplied tailed agents to multiple goals using A* as an underlying planner.
 
 GNU GENERAL PUBLIC LICENSE
 
